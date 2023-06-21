@@ -1,9 +1,11 @@
 package com.keyin.http.cli;
 
+import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
 import com.keyin.http.client.RESTClient;
 
 import java.util.List;
+import java.util.Objects;
 
 public class HTTPRestCLIApplication {
 
@@ -16,15 +18,57 @@ public class HTTPRestCLIApplication {
 
         for (Airport airport : airports) {
             report.append(airport.getName());
-            report.append(" - ");
+            report.append("-");
             report.append(airport.getCode());
 
             if (airports.indexOf(airport) != (airports.size() - 1)) {
-                report.append(",");
+                report.append(", ");
             }
         }
 
         System.out.println(report.toString());
+
+        return report.toString();
+    }
+
+    public String generateAircraftReport() {
+        List<Aircraft> aircrafts = getRestClient().getAllAircraft();
+
+        StringBuffer report = new StringBuffer();
+
+        for (Aircraft aircraft : aircrafts) {
+            report.append(aircraft.getModel());
+            report.append("-");
+            report.append(aircraft.getTailNumber());
+
+
+            if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+//        System.out.println(report.toString());
+
+        return report.toString();
+    }
+
+    public String generateAllowedAirportsBasedOnId(Long id) {
+        List<Airport> airports = getRestClient().getAllAllowedAirportsForAircraftBasedOnId(id);
+
+        StringBuffer report = new StringBuffer();
+
+        for (Airport airport : airports) {
+            report.append(airport.getName());
+            report.append("-");
+            report.append(airport.getCode());
+
+
+            if (airports.indexOf(airport) != (airports.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+//        System.out.println(report.toString());
 
         return report.toString();
     }
@@ -46,6 +90,22 @@ public class HTTPRestCLIApplication {
 
         cliApp.setRestClient(new RESTClient());
 
-        cliApp.generateAirportReport();
+        if((args[0].equalsIgnoreCase("Genall"))){
+            cliApp.generateAirportReport();
+
+            cliApp.generateAircraftReport();
+
+        } else if (args[0].equalsIgnoreCase("Generate") && args[1].equalsIgnoreCase("Allowed")){
+            Long id = Long.parseLong(args[2]);
+            cliApp.generateAllowedAirportsBasedOnId(id);
+
+        }
+
+
+//        cliApp.generateAirportReport();
+
+//        cliApp.generateAircraftReport();
+
+
     }
 }

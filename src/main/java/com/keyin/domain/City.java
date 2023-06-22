@@ -19,6 +19,7 @@ public class City {
         this.state = state;
         this.population = population;
         this.name = name;
+        this.airportsInCity = new ArrayList<>();
     }
 
     public Long getId() {

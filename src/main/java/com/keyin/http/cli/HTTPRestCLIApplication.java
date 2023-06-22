@@ -171,6 +171,7 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
+
     /**City client functions/methods END HERE ~ Author: Devin Augot */
 
     public RESTClient getRestClient() {

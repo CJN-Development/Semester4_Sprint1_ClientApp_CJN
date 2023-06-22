@@ -62,6 +62,65 @@ public class CityClientTest {
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.getAllAirportsForCities(1L).contains("YYT"));
     }
+
+    @Test
+    @DisplayName("What Airports are in what Cities?")
+    public void testAirportsInCities() {
+
+        City city1 = new City(1L, "NL", 150_000, "St. John's");
+        City city2 = new City(2L, "ON", 2_900_000, "Toronto");
+
+        // airports for St. John's
+        Airport airport1 = new Airport();
+        airport1.setName("St. John's International 1");
+        airport1.setCode("YYT");
+        airport1.setId(1L);
+
+        Airport airport2 = new Airport();
+        airport2.setName("St. John's International 2");
+        airport2.setCode("YYT2");
+        airport2.setId(2L);
+
+        // airports for Toronto
+        Airport airport3 = new Airport();
+        airport3.setName("Toronto International 1");
+        airport3.setCode("YYZ");
+        airport3.setId(3L);
+
+        Airport airport4 = new Airport();
+        airport4.setName("Toronto International 2");
+        airport4.setCode("YYZ2");
+        airport4.setId(4L);
+
+        // Associating airports with cities
+        city1.addAirportsInCity(airport1);
+        city1.addAirportsInCity(airport2);
+        city2.addAirportsInCity(airport3);
+        city2.addAirportsInCity(airport4);
+
+        // Retrieve the airports in each city
+        List<Airport> airportsInCity1 = city1.getAirportsInCity();
+        List<Airport> airportsInCity2 = city2.getAirportsInCity();
+
+        // Assert the airports associated with each city
+        Assertions.assertTrue(airportsInCity1.contains(airport1));
+        Assertions.assertTrue(airportsInCity1.contains(airport2));
+        Assertions.assertTrue(airportsInCity2.contains(airport3));
+        Assertions.assertTrue(airportsInCity2.contains(airport4));
+
+
+        // Did these prints to just make sure right results coming back
+        System.out.println("Test Airports in Cities: SUCCESS");
+        System.out.println("Airports in St. John's:");
+        for (Airport airport : airportsInCity1) {
+            System.out.println("- " + airport.getName());
+        }
+        System.out.println("Airports in Toronto:");
+        for (Airport airport : airportsInCity2) {
+            System.out.println("- " + airport.getName());
+        }
+    }
 }
+
 
 

@@ -6,11 +6,13 @@ import com.keyin.domain.Airport;
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.CityClient;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.List;
 public class CityClientTest {
 
     @Mock public CityClient mockCityClient;
+
+
 
     @Test
     @DisplayName("Getting all Cities")
@@ -36,7 +40,7 @@ public class CityClientTest {
 
         httpRestCLIApplicationUnderTest.setCityClient(mockCityClient);
 
-//        Mockito.when(mockCityClient.getAllCities()).thenReturn(cityList);
+        Mockito.when(mockCityClient.getAllCities()).thenReturn(cityList);
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateCityReport().contains("St. John's"));
 

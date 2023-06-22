@@ -199,7 +199,7 @@ public class HTTPRestCLIApplication {
         this.restClient = restClient;
     }
 
-    public void setAircraftClientClient(AircraftClient aircraftClient) {
+    public void setAircraftClient(AircraftClient aircraftClient) {
         this.aircraftClient = aircraftClient;
     }
 
@@ -209,7 +209,7 @@ public class HTTPRestCLIApplication {
         HTTPRestCLIApplication cliApp = new HTTPRestCLIApplication();
 
         cliApp.setRestClient(new RESTClient());
-        cliApp.setAircraftClientClient(new AircraftClient());
+        cliApp.setAircraftClient(new AircraftClient());
         cliApp.setCityClient(new CityClient());
 
         if (args[0].equalsIgnoreCase("Genall")) {

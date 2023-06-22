@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
+import com.keyin.domain.City;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,6 +41,33 @@ public class RESTClient {
 
 
         return airports;
+    }
+
+    public List<City> getAllCities() {
+        List<City> cities = new ArrayList<City>();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/cities")).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode()==200) {
+//                System.out.println("***** " + response.body());
+            } else {
+                System.out.println("Error Status Code: " + response.statusCode());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            cities = mapper.readValue(response.body(), new TypeReference<List<City>>(){});
+
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        return cities;
     }
 
 

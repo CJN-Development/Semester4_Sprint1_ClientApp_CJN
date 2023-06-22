@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Running Checks On Entities
 
 on:
   push:
@@ -27,6 +27,6 @@ jobs:
         java-version: '20'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Builing App
       run: mvn -B package --file pom.xml
 

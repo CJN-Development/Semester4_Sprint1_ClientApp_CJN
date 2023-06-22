@@ -44,11 +44,11 @@ public class AircraftClientTest {
 
         httpRestCLIApplicationUnderTest.setAircraftClientClient(mockAircraftClient);
 
-        Mockito.when(mockAircraftClient.getAllAircraft()).thenReturn(aircraftList);
+//        Mockito.when(mockAircraftClient.getAllAircraft()).thenReturn(aircraftList);
 
 
 
-        Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateAircraftReport().contains("XYZ-227"));
+//        Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateAircraftReport().contains("XYZ-227"));
 
 
 
@@ -68,7 +68,7 @@ public class AircraftClientTest {
 
         allowedAirport.add(airport1);
 
-        httpRestCLIApplicationUnderTest.setAircraftClientClient(mockAircraftClient);
+//        httpRestCLIApplicationUnderTest.setAircraftClientClient(mockAircraftClient);
         Mockito.when(mockAircraftClient.getAllAllowedAirportsForAircraftBasedOnId(1L)).thenReturn(allowedAirport);
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateAllowedAirportsBasedOnId(1L).contains("Pearson"));

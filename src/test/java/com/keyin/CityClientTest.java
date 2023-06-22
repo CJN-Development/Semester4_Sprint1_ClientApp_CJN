@@ -18,7 +18,7 @@ import java.util.List;
 @ExtendWith(MockitoExtension.class)
 public class CityClientTest {
 
-    @Mock private CityClient mockCityClient;
+    @Mock public CityClient mockCityClient;
 
     @Test
     @DisplayName("Getting all Cities")
@@ -36,7 +36,7 @@ public class CityClientTest {
 
         httpRestCLIApplicationUnderTest.setCityClient(mockCityClient);
 
-        Mockito.when(mockCityClient.getAllCities()).thenReturn(cityList);
+//        Mockito.when(mockCityClient.getAllCities()).thenReturn(cityList);
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateCityReport().contains("St. John's"));
 

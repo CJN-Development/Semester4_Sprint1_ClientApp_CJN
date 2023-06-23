@@ -4,6 +4,7 @@ import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
 import com.keyin.domain.City;
 import com.keyin.http.client.AircraftClient;
+import com.keyin.http.client.AirportClient;
 import com.keyin.http.client.CityClient;
 import com.keyin.http.client.RESTClient;
 
@@ -16,6 +17,7 @@ public class HTTPRestCLIApplication {
 
     private AircraftClient aircraftClient;
     private CityClient cityClient;
+    private AirportClient airportClient;
 
     public String generateAirportReport() {
         List<Airport> airports = getRestClient().getAllAirports();

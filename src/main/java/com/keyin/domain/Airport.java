@@ -1,11 +1,20 @@
 package com.keyin.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Airport {
 
     private long id;
     private String name;
     private String code;
+
+    private List<Passenger> passengers;
+
+    public Airport(){
+        passengers = new ArrayList<>();
+    }
 
     public long getId() {
         return id;

@@ -1,22 +1,26 @@
 package com.keyin.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Passenger {
-
-    private Long id;
-
+    private long id;
     private String firstName;
-
     private String lastName;
 
     private int phoNum;
 
-    public Long getId() {
+    private List<Aircraft> allowedAircraft;
+
+    public Passenger(){
+        allowedAircraft = new ArrayList<>();
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -42,6 +46,18 @@ public class Passenger {
 
     public void setPhoNum(int phoNum) {
         this.phoNum = phoNum;
+    }
+
+    public void addAllowedAircraft(Aircraft aircraft) {
+        allowedAircraft.add(aircraft);
+    }
+
+    public void removeAllowedAircraft(Aircraft aircraft) {
+        allowedAircraft.remove(aircraft);
+    }
+
+    public List<Aircraft> getAllowedAircrafts() {
+        return allowedAircraft;
     }
 
     @Override

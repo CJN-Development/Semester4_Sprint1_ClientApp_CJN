@@ -127,6 +127,11 @@ public class CityClient {
             e.printStackTrace();
         }
 
+        if (actionList.isEmpty()) {
+            throw new IllegalStateException("Action list is empty");
+            // System.out.println("Action list is empty.");
+        }
+
         return actionList;
     }
 

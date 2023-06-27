@@ -3,10 +3,8 @@ package com.keyin.http.cli;
 import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
 import com.keyin.domain.City;
-import com.keyin.http.client.AircraftClient;
-import com.keyin.http.client.AirportClient;
-import com.keyin.http.client.CityClient;
-import com.keyin.http.client.RESTClient;
+import com.keyin.domain.Passenger;
+import com.keyin.http.client.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +16,8 @@ public class HTTPRestCLIApplication {
     private AircraftClient aircraftClient;
     private CityClient cityClient;
     private AirportClient airportClient;
+
+    private PassengerClient passengerClient;
 
     public String generateAirportReport() {
         List<Airport> airports = getRestClient().getAllAirports();
@@ -177,68 +177,68 @@ public class HTTPRestCLIApplication {
     /**City client functions/methods END HERE ~ Author: Devin Augot */
 
     /** PASSENGER CLIENT FUNCTIONS START*/
-//    public String generatePassengerReport() {
-//        List<Passenger> passengers = getPassengerClient().getAllAircraft();
-//
-//        StringBuffer report = new StringBuffer();
-//
-//        for (Passenger passenger : passengers) {
-//            report.append(passenger.getFirstName());
-//            report.append("-");
-//            report.append(passenger.getPhoNum());
-//
-//
-//            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
-//                report.append(", ");
-//            }
-//        }
-//        System.out.println("****LIST OF ALL PASSENGERS****");
+    public String generatePassengerReport() {
+        List<Passenger> passengers = getPassengerClient().getAllPassenger();
+
+        StringBuffer report = new StringBuffer();
+
+        for (Passenger passenger : passengers) {
+            report.append(passenger.getFirstName());
+            report.append("-");
+            report.append(passenger.getPhoNum());
+
+
+            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
+                report.append(", ");
+            }
+        }
+        System.out.println("****LIST OF ALL PASSENGERS****");
+        System.out.println(report.toString());
+
+        return report.toString();
+    }
+
+public String generateAllowedAircraftsBasedOnId(Long id) {
+    List<Aircraft> aircrafts = getPassengerClient().getPassengersOnAircraftBasedOnId(id);
+
+    StringBuffer report = new StringBuffer();
+
+    for (Aircraft aircraft : aircrafts) {
+        report.append(aircraft.getModel());
+        report.append("-");
+        report.append(aircraft.getTailNumber());
+
+
+        if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
+            report.append(", ");
+        }
+    }
+
 //        System.out.println(report.toString());
-//
-//        return report.toString();
-//    }
 
-//public String generateAllowedAircraftsBasedOnId(Long id) {
-//    List<Aircraft> aircrafts = getPassengerClient().getAllAllowedAircraftsForPassengersBasedOnId(id);
-//
-//    StringBuffer report = new StringBuffer();
-//
-//    for (Aircraft aircraft : aircrafts) {
-//        report.append(aircraft.getModel());
-//        report.append("-");
-//        report.append(aircraft.getTailNumber());
-//
-//
-//        if (aircrafts.indexOf(aircraft) != (aircraft.size() - 1)) {
-//            report.append(", ");
-//        }
-//    }
-//
-////        System.out.println(report.toString());
-//
-//    return report.toString();
-//}
+    return report.toString();
+}
 
-//    public String generateListOfPassengersFromSearch(String searchTerm) {
-//        List<Passenger> passengers = getPassengerClient().searchPassengerBasedOnSearchTerm(searchTerm);
-//
-//        StringBuffer report = new StringBuffer();
-//
-//        for (Passenger passenger : passengers) {
-//            report.append(passenger.getFirstName());
-//            report.append("-");
-//            report.append(passenger.getPhoNum());
-//
-//
-//            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
-//                report.append(", ");
-//            }
-//        }
-//
-////        System.out.println(report.toString());
-//
-//        return report.toString();
-//    }
+    public String generateListOfPassengersFromSearch(String searchTerm) {
+        List<Passenger> passengers = getPassengerClient().searchPassengerBasedOnSearchTerm(searchTerm);
+
+        StringBuffer report = new StringBuffer();
+
+        for (Passenger passenger : passengers) {
+            report.append(passenger.getFirstName());
+            report.append("-");
+            report.append(passenger.getPhoNum());
+
+
+            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+//        System.out.println(report.toString());
+
+        return report.toString();
+    }
     /** PASSENGER CLIENT FUNCTIONS END*/
 
     public RESTClient getRestClient() {
@@ -261,12 +261,12 @@ public class HTTPRestCLIApplication {
         }
         return  aircraftClient;
     }
-    //    public PassengerClient getPassengerClient(){
-//        if(passengerClient == null){
-//            passengerClient = new passengerClient();
-//        }
-//        return  passengerClient;
-//    }
+        public PassengerClient getPassengerClient(){
+        if(passengerClient == null){
+            passengerClient = new PassengerClient();
+        }
+        return  passengerClient;
+    }
 
     public void setRestClient(RESTClient restClient) {
         this.restClient = restClient;
@@ -278,7 +278,7 @@ public class HTTPRestCLIApplication {
 
     public void setCityClient(CityClient cityClient){this.cityClient = cityClient;}
 
-    //public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
+    public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
 
     public static void main(String[] args) {
         HTTPRestCLIApplication cliApp = new HTTPRestCLIApplication();
@@ -310,22 +310,22 @@ public class HTTPRestCLIApplication {
         } else if (args[0].equalsIgnoreCase("GenAirportsInCity")) {
             Long id = Long.parseLong(args[1]);
             cliApp.getAllAirportsForCities(id);
-        }
-//        } else if (args[0].equalsIgnoreCase("searchPassengers")) {
-//                String searchTerm = args[1];
-//                cliApp.generateListOfPassengersFromSearch(searchTerm);
-//        } else if (args[0].equalsIgnoreCase("GenPassenger")) {
-//                cliApp.generatePassengerReport();
-//        } else if (args[0].equalsIgnoreCase("GenPassengersOnAircrafts")) {
-//            Long id = Long.parseLong(args[1]);
-//            cliApp.generateAllowedAircraftsBasedOnId(id);
+
+        } else if (args[0].equalsIgnoreCase("searchPassengers")) {
+                String searchTerm = args[1];
+                cliApp.generateListOfPassengersFromSearch(searchTerm);
+        } else if (args[0].equalsIgnoreCase("GenPassenger")) {
+                cliApp.generatePassengerReport();
+        } else if (args[0].equalsIgnoreCase("GenPassengersOnAircrafts")) {
+            Long id = Long.parseLong(args[1]);
+            cliApp.generateAllowedAircraftsBasedOnId(id);
 
 
 
-//        cliApp.generateAirportReport();
+        cliApp.generateAirportReport();
 
-//        cliApp.generateAircraftReport();
+        cliApp.generateAircraftReport();
 
 
     }
-}
+}}

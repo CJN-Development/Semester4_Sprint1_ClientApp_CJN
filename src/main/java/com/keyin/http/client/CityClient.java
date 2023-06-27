@@ -137,6 +137,7 @@ public class CityClient {
         String url = "http://localhost:8080/cities/undo";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
         try {
@@ -159,6 +160,7 @@ public class CityClient {
         String url = "http://localhost:8080/cities/redo";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

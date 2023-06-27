@@ -18,6 +18,55 @@ public class HTTPRestCLIApplication {
     private AirportClient airportClient;
     private PassengerClient passengerClient;
 
+
+    public RESTClient getRestClient() {
+        if (restClient == null) {
+            restClient = new RESTClient();
+        }
+
+        return restClient;
+    }
+    public CityClient getCityClient(){
+        if(cityClient == null){
+            cityClient = new CityClient();
+        }
+        return cityClient;
+    }
+
+    public AirportClient getAirportClient(){
+        if (airportClient == null){
+            airportClient = new AirportClient();
+        }
+        return airportClient;
+    }
+
+    public AircraftClient getAircraftClient(){
+        if(aircraftClient == null){
+            aircraftClient = new AircraftClient();
+        }
+        return  aircraftClient;
+    }
+    public PassengerClient getPassengerClient(){
+        if(passengerClient == null){
+            passengerClient = new PassengerClient();
+        }
+        return  passengerClient;
+    }
+
+    public void setRestClient(RESTClient restClient) {
+        this.restClient = restClient;
+    }
+
+    public void setAircraftClient(AircraftClient aircraftClient) {
+        this.aircraftClient = aircraftClient;
+    }
+
+    public void setCityClient(CityClient cityClient){this.cityClient = cityClient;}
+
+    public void setAirportClient(AirportClient airportClient){this.airportClient = airportClient;}
+
+    public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
+
     public String generateAirportReport() {
         List<Airport> airports = getAirportClient().getAllAirports();
 
@@ -55,11 +104,14 @@ public class HTTPRestCLIApplication {
             }
         }
 
-//        System.out.println(report.toString());
+
 
         return report.toString();
     }
-
+/**
+ * ***************Aircraft Methods Start Here ******************
+ *
+ * **/
     public String generateAircraftReport() {
         List<Aircraft> aircrafts = getAircraftClient().getAllAircraft();
 
@@ -97,7 +149,7 @@ public class HTTPRestCLIApplication {
             }
         }
 
-//        System.out.println(report.toString());
+
 
         return report.toString();
     }
@@ -118,10 +170,41 @@ public class HTTPRestCLIApplication {
             }
         }
 
-//        System.out.println(report.toString());
 
         return report.toString();
     }
+
+    public List<String> getAircraftActions() {
+        AircraftClient aircraftClient = new AircraftClient();
+        return aircraftClient.getAircraftActions();
+    }
+
+    public void undoAircraftAction() {
+        CityClient cityClient = new CityClient();
+        boolean success = aircraftClient.undoAircraftAction();
+        if (success) {
+            System.out.println("Undo city action successful.");
+        } else {
+            System.out.println("Undo city action failed.");
+        }
+    }
+
+    public void redoAircraftAction() {
+        CityClient cityClient = new CityClient();
+        boolean success = aircraftClient.redoCityAction();
+        if (success) {
+            System.out.println("Redo Aircraft action successful.");
+        } else {
+            System.out.println("Redo Aircraft action failed.");
+        }
+    }
+
+
+
+    /**
+     * ***************Aircraft Methods End Here ******************
+     *
+     * **/
 
     /**   City client functions/methods ~ Author: Devin Augot    */
     public String generateCityReport() {
@@ -167,7 +250,7 @@ public class HTTPRestCLIApplication {
             }
         }
 
-//        System.out.println(report.toString());
+
 
         return report.toString();
     }
@@ -188,7 +271,7 @@ public class HTTPRestCLIApplication {
             }
         }
 
-//        System.out.println(report.toString());
+
 
         return report.toString();
     }
@@ -257,7 +340,7 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         }
     }
 
-//        System.out.println(report.toString());
+
 
     return report.toString();
 }
@@ -278,59 +361,13 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             }
         }
 
-//        System.out.println(report.toString());
+
 
         return report.toString();
     }
     /** PASSENGER CLIENT FUNCTIONS END*/
 
-    public RESTClient getRestClient() {
-        if (restClient == null) {
-            restClient = new RESTClient();
-        }
 
-        return restClient;
-    }
-    public CityClient getCityClient(){
-        if(cityClient == null){
-            cityClient = new CityClient();
-        }
-        return cityClient;
-    }
-
-    public AirportClient getAirportClient(){
-        if (airportClient == null){
-            airportClient = new AirportClient();
-        }
-        return airportClient;
-    }
-
-    public AircraftClient getAircraftClient(){
-        if(aircraftClient == null){
-            aircraftClient = new AircraftClient();
-        }
-        return  aircraftClient;
-    }
-        public PassengerClient getPassengerClient(){
-        if(passengerClient == null){
-            passengerClient = new PassengerClient();
-        }
-        return  passengerClient;
-    }
-
-    public void setRestClient(RESTClient restClient) {
-        this.restClient = restClient;
-    }
-
-    public void setAircraftClient(AircraftClient aircraftClient) {
-        this.aircraftClient = aircraftClient;
-    }
-
-    public void setCityClient(CityClient cityClient){this.cityClient = cityClient;}
-
-    public void setAirportClient(AirportClient airportClient){this.airportClient = airportClient;}
-
-    public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
 
     public static void main(String[] args) {
         HTTPRestCLIApplication cliApp = new HTTPRestCLIApplication();
@@ -348,18 +385,7 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             // Generate allowed airports for an aircraft based on ID
             Long id = Long.parseLong(args[2]);
             cliApp.generateAllowedAirportsBasedOnId(id);
-        } else if (args[0].equalsIgnoreCase("searchAircraft")) {
-            // Search for aircraft based on a search term
-            String searchTerm = args[1];
-            cliApp.generateListOfAirportsFromSearch(searchTerm);
-        } else if (args[0].equalsIgnoreCase("searchCities")) {
-            // Search for cities based on a search term
-            String searchTerm = args[1];
-            cliApp.generateListOfCitiesFromSearch(searchTerm);
-        } else if (args[0].equalsIgnoreCase("GenCity")) {
-            // Generate a report for all cities
-            cliApp.generateCityReport();
-        } else if (args[0].equalsIgnoreCase("GenAirportsInCity")) {
+        }  else if (args[0].equalsIgnoreCase("GenAirportsInCity")) {
             // Get all airports for a city based on ID
             Long id = Long.parseLong(args[1]);
             cliApp.getAllAirportsForCities(id);
@@ -376,24 +402,21 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             for (String action : cityActions) {
                 System.out.println(action);
             }
-        } else if (args[0].equalsIgnoreCase("searchPassengers")) {
-            String searchTerm = args[1];
-            cliApp.generateListOfPassengersFromSearch(searchTerm);
-        } else if (args[0].equalsIgnoreCase("GenPassenger")) {
-            cliApp.generatePassengerReport();
         } else if (args[0].equalsIgnoreCase("GenPassengersOnAircrafts")) {
             Long id = Long.parseLong(args[1]);
             cliApp.generateAllowedAircraftsBasedOnId(id);
+        } else if (args[0].equalsIgnoreCase("GetAircraftActions")) {
+            cliApp.getAircraftActions();
+
+        } else if (args[0].equalsIgnoreCase("UndoAircraftAction")) {
+            cliApp.undoAircraftAction();
+
+        } else if (args[0].equalsIgnoreCase("RedoAirCraftAction")) {
+            cliApp.redoAircraftAction();
+
         } else {
             System.out.println("Invalid action");
 
-
-
-
-
-//        cliApp.generateAirportReport();
-//
-//        cliApp.generateAircraftReport();
 
 
     }

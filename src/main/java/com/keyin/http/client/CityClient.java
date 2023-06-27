@@ -14,6 +14,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 public class CityClient {
 
@@ -101,4 +103,76 @@ public class CityClient {
 
         return cities ;
     }
+    /**Implementing Action Stack list for City*/
+    public List<String> getCityActions() {
+        List<String> actionList = new ArrayList<>();
+
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/cities/getCityActions";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                // Parse the response body to extract the list of actions
+                actionList = Arrays.asList(responseBody.split(","));
+                System.out.println(actionList);
+            } else {
+                System.out.println("Failed to get city actions. Error Status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return actionList;
+    }
+
+    /**Implementing Undo redo HTTP calls*/
+
+    public boolean undoCityAction() {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/cities/undo";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("Undo action successful");
+                return true;
+            } else {
+                System.out.println("Undo action failed. Error Status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean redoCityAction() {
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/cities/redo";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("Redo action successful");
+                return true;
+            } else {
+                System.out.println("Redo action failed. Error Status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }

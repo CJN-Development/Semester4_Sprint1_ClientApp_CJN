@@ -3,6 +3,7 @@ package com.keyin.http.cli;
 import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
 import com.keyin.domain.City;
+import com.keyin.domain.Passenger;
 import com.keyin.http.client.AircraftClient;
 import com.keyin.http.client.AirportClient;
 import com.keyin.http.client.CityClient;
@@ -20,7 +21,7 @@ public class HTTPRestCLIApplication {
     private AirportClient airportClient;
 
     public String generateAirportReport() {
-        List<Airport> airports = getRestClient().getAllAirports();
+        List<Airport> airports = getAirportClient().getAllAirports();
 
         StringBuffer report = new StringBuffer();
 
@@ -36,6 +37,27 @@ public class HTTPRestCLIApplication {
         System.out.println("****LIST OF ALL AIRPORTS****");
 
         System.out.println(report.toString());
+
+        return report.toString();
+    }
+
+    public String getAllPassengersWhoHaveUsedAirport(Long id) {
+        List<Passenger> airportsPassengersHaveUsed = getAirportClient().getAllAirportsPassengersHaveUsed(1L);
+
+        StringBuffer report = new StringBuffer();
+
+        for (Passenger passenger : airportsPassengersHaveUsed) {
+            report.append(passenger.getFirstName());
+            report.append("-");
+            report.append(passenger.getLastName());
+
+
+            if (airportsPassengersHaveUsed.indexOf(passenger) != (airportsPassengersHaveUsed.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+//        System.out.println(report.toString());
 
         return report.toString();
     }
@@ -255,6 +277,13 @@ public class HTTPRestCLIApplication {
         return cityClient;
     }
 
+    public AirportClient getAirportClient(){
+        if (airportClient == null){
+            airportClient = new AirportClient();
+        }
+        return airportClient;
+    }
+
     public AircraftClient getAircraftClient(){
         if(aircraftClient == null){
             aircraftClient = new AircraftClient();
@@ -277,6 +306,8 @@ public class HTTPRestCLIApplication {
     }
 
     public void setCityClient(CityClient cityClient){this.cityClient = cityClient;}
+
+    public void setAirportClient(AirportClient airportClient){this.airportClient = airportClient;}
 
     //public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
 

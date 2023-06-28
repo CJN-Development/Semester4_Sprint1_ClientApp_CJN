@@ -454,10 +454,8 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         } else if (args[0].equalsIgnoreCase("RedoAirCraftAction")) {
             cliApp.redoAircraftAction();
 
-      
         }  else if (args[0].equalsIgnoreCase("getPassengerActions")) {
        cliApp.getPassengerActions();
-        }
 
         } else if (args[0].equalsIgnoreCase("GenPassengersInAirport")) {
         Long id = Long.parseLong(args[1]);

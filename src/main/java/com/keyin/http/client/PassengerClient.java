@@ -114,4 +114,41 @@ public class PassengerClient {
         return actionList;
 
     }
+    public boolean undoPassengerAction(){
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/passenger/undo";
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).POST(HttpRequest.BodyPublishers.noBody()).build();
+
+        try{
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if(response.statusCode() == 200){
+                System.out.println("Undo Action Successful");
+                return true;
+            }else{
+                System.out.println("Undo action failed. Error Status Code: " + response.statusCode());
+            }
+        }catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean redoPassengerAction(){
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/passenger/redo";
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).POST(HttpRequest.BodyPublishers.noBody()).build();
+
+        try{
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if(response.statusCode() == 200){
+                System.out.println("Redo Action Successful");
+                return true;
+            }else{
+                System.out.println("Redo action failed. Error Status Code: " + response.statusCode());
+            }
+        }catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

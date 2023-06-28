@@ -12,6 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PassengerClient {
@@ -83,5 +84,29 @@ public class PassengerClient {
             e.printStackTrace();
         }
         return passenger;
+    }
+    public List<String> getPassengerActions(){
+        List<String> actionList = new ArrayList<>();
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/passenger/getPassengerActions";
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+
+        try{
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if(response.statusCode() == 200){
+                String responseBody = response.body();
+                actionList = Arrays.asList(responseBody.split(","));
+                System.out.println(actionList);
+            }else{
+                System.out.println("Failed to get passenger actions. Error Status Code: "+ response.statusCode());
+            }
+        }catch(IOException |InterruptedException e){
+            e.printStackTrace();
+        }
+        if(actionList.isEmpty()){
+            throw new IllegalStateException("Action List is empty");
+        }
+        return actionList;
+
     }
 }

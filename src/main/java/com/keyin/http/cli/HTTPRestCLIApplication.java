@@ -173,6 +173,11 @@ public class HTTPRestCLIApplication {
         AircraftClient aircraftClient = new AircraftClient();
         return aircraftClient.getAircraftActions();
     }
+    public  List<String> getPassengerActions(){
+        PassengerClient passengerClient = new PassengerClient();
+        return passengerClient.getPassengerActions();
+    }
+
 
     public void undoAircraftAction() {
         CityClient cityClient = new CityClient();
@@ -400,10 +405,17 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         } else if (args[0].equalsIgnoreCase("RedoAirCraftAction")) {
             cliApp.redoAircraftAction();
 
-        } else {
-            System.out.println("Invalid action");
+        }  else if (args[0].equalsIgnoreCase("getPassengerActions")) {
+            List<String> passengerActions = cliApp.getPassengerActions();
+            System.out.println("Passenger Actions:");
+            for (String action : passengerActions) {
+                System.out.println(action);
+            }}
+            else{
+                System.out.println("Invalid action");
 
 
+            }
 
+        }
     }
-}}

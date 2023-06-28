@@ -13,6 +13,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AirportClient {
@@ -40,6 +41,77 @@ public class AirportClient {
             e.printStackTrace();
         }
         return airport ;
+    }
+
+    public List<String> getAirportActions(){
+        List<String> listOfActions = new ArrayList<>();
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/airport/getAirportActions";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200){
+                int actionNum = 1;
+                String responseBody = response.body();
+                listOfActions = Arrays.asList(responseBody.split(","));
+                for (String actions : listOfActions){
+                    System.out.println("Action" + " " + actionNum + ":" + actions);
+                    actionNum++;
+                }
+            }else {
+                System.out.println("Failed to get Airport actions. Error Status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+        return listOfActions;
+    }
+
+    public boolean undoAirportAction(){
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/airport/undo";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200){
+                System.out.println("Undo action successful");
+                return true;
+            } else {
+                System.out.println("Undo action failed. Error status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean redoAirportAction(){
+        HttpClient client = HttpClient.newHttpClient();
+        String url = "http://localhost:8080/airport/redo";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        try{
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200){
+                System.out.println("Redo action successful");
+                return true;
+            } else {
+                System.out.println("Redo action failed. Error status Code: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public List<Passenger> getAllAirportsPassengersHaveUsed(Long id){

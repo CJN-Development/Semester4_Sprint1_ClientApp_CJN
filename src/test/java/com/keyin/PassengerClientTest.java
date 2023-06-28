@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +68,24 @@ public class PassengerClientTest {
 
 
 
+    }
+
+    @Test
+    @DisplayName("Get All City Action")
+    public void testGetAllPassengerActions(){
+        List<String> passengerActions = new ArrayList<>();
+        passengerActions.add("Action 1");
+        passengerActions.add("Action 2");
+        passengerActions.add("Action 3");
+
+        when(mockPassengerClient.getPassengerActions()).thenReturn(passengerActions);
+        List<String> result = mockPassengerClient.getPassengerActions();
+        Assertions.assertEquals(passengerActions,result,"Returned Passenger actions should match the expected list");
+
+        System.out.println("Passenger Action");
+        for(String action: result){
+            System.out.println("- "+ action);
+        }
+        verify(mockPassengerClient,times(1)).getPassengerActions();
     }
 }

@@ -406,16 +406,6 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             cliApp.redoAircraftAction();
 
         }  else if (args[0].equalsIgnoreCase("getPassengerActions")) {
-            List<String> passengerActions = cliApp.getPassengerActions();
-            System.out.println("Passenger Actions:");
-            for (String action : passengerActions) {
-                System.out.println(action);
-            }}
-            else{
-                System.out.println("Invalid action");
-
-
-            }
-
+       cliApp.getPassengerActions();
         }
-    }
+    }}

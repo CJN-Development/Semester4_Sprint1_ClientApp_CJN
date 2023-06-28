@@ -94,9 +94,14 @@ public class PassengerClient {
         try{
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if(response.statusCode() == 200){
+                int actionNum = 1;
                 String responseBody = response.body();
                 actionList = Arrays.asList(responseBody.split(","));
-                System.out.println(actionList);
+                for(String actions: actionList){
+                System.out.println("Action" + " " + actionNum + ":" + actions);
+
+                actionNum++;
+                }
             }else{
                 System.out.println("Failed to get passenger actions. Error Status Code: "+ response.statusCode());
             }

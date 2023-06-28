@@ -98,13 +98,10 @@ public class HTTPRestCLIApplication {
             report.append("-");
             report.append(passenger.getLastName());
 
-
             if (airportsPassengersHaveUsed.indexOf(passenger) != (airportsPassengersHaveUsed.size() - 1)) {
                 report.append(", ");
             }
         }
-
-
 
         return report.toString();
     }
@@ -148,8 +145,6 @@ public class HTTPRestCLIApplication {
                 report.append(", ");
             }
         }
-
-
 
         return report.toString();
     }
@@ -199,8 +194,6 @@ public class HTTPRestCLIApplication {
         }
     }
 
-
-
     /**
      * ***************Aircraft Methods End Here ******************
      *
@@ -220,8 +213,6 @@ public class HTTPRestCLIApplication {
             report.append(" "+"{Population : ");
             report.append(city.getPopulation()).append("}");
 
-
-
             if (cities.indexOf(city) != (cities.size() - 1)) {
                 report.append(", ");
             }
@@ -233,7 +224,6 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
-
     public String getAllAirportsForCities(Long id) {
         List<Airport> airportsInCity = getCityClient().getAllAirportsForCitiesBasedOnId(1L);
 
@@ -244,13 +234,10 @@ public class HTTPRestCLIApplication {
             report.append("-");
             report.append(airport.getCode());
 
-
             if (airportsInCity.indexOf(airport) != (airportsInCity.size() - 1)) {
                 report.append(", ");
             }
         }
-
-
 
         return report.toString();
     }
@@ -271,10 +258,9 @@ public class HTTPRestCLIApplication {
             }
         }
 
-
-
         return report.toString();
     }
+
     public void undoCityAction() {
         CityClient cityClient = new CityClient();
         boolean success = cityClient.undoCityAction();

@@ -2,12 +2,9 @@ package com.keyin.http.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.keyin.domain.City;
 import com.keyin.domain.Airport;
-import com.keyin.domain.City;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,7 +12,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 public class CityClient {
 
@@ -28,12 +24,12 @@ public class CityClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode()==200) {
-//                System.out.println("***** CITY LIST ***** " + response.body());
             } else {
                 System.out.println("Error Status Code: " + response.statusCode());
             }
 
             ObjectMapper mapper = new ObjectMapper();
+
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             cities = mapper.readValue(response.body(), new TypeReference<List<City>>(){});
 
@@ -44,11 +40,7 @@ public class CityClient {
 
         return cities;
     }
-
-    /** This should get all airports based on ID
-     * not sure if this needs to use airportsInCity ArrayList or not, or will cities display along with correlating
-     * airports */
-
+    
     public List<Airport> getAllAirportsForCitiesBasedOnId(Long id) {
         List<Airport> airportInCity = new ArrayList<>();
 
@@ -73,9 +65,9 @@ public class CityClient {
             e.printStackTrace();
         }
 
-
         return airportInCity ;
     }
+
     public List<City> searchCitiesBasedOnSearchTerm(String searchInput) {
         List<City> cities = new ArrayList<>();
         HttpClient client = HttpClient.newHttpClient();
@@ -100,9 +92,9 @@ public class CityClient {
             e.printStackTrace();
         }
 
-
         return cities ;
     }
+
     /**Implementing Action Stack list for City*/
     public List<String> getCityActions() {
         List<String> actionList = new ArrayList<>();

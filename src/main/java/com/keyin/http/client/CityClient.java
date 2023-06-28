@@ -29,7 +29,7 @@ public class CityClient {
             }
 
             ObjectMapper mapper = new ObjectMapper();
-
+            
             mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
             cities = mapper.readValue(response.body(), new TypeReference<List<City>>(){});
 
@@ -40,7 +40,8 @@ public class CityClient {
 
         return cities;
     }
-    
+
+
     public List<Airport> getAllAirportsForCitiesBasedOnId(Long id) {
         List<Airport> airportInCity = new ArrayList<>();
 
@@ -104,14 +105,15 @@ public class CityClient {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
-
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
                 // Parse the response body to extract the list of actions
                 actionList = Arrays.asList(responseBody.split(","));
-                System.out.println(actionList);
+                for (String action : actionList) {
+                    System.out.println(action);
+                }
             } else {
                 System.out.println("Failed to get city actions. Error Status Code: " + response.statusCode());
             }

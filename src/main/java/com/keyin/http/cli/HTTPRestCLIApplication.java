@@ -67,6 +67,9 @@ public class HTTPRestCLIApplication {
 
     public void setPassengerClient(PassengerClient passengerClient){this.passengerClient = passengerClient;}
 
+    /*
+    * Airport Methods
+    * */
     public String generateAirportReport() {
         List<Airport> airports = getAirportClient().getAllAirports();
 
@@ -87,6 +90,56 @@ public class HTTPRestCLIApplication {
 
         return report.toString();
     }
+
+    public String generateAllAirportsPassengersHaveUsed(Long id) {
+        List<Passenger> passengers = getAirportClient().getAllAirportsPassengersHaveUsed(id);
+
+        StringBuffer report = new StringBuffer();
+
+        for (Passenger passenger : passengers) {
+            report.append(passenger.getFirstName());
+            report.append("-");
+            report.append(passenger.getLastName());
+
+
+            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+
+
+        return report.toString();
+    }
+
+    public List<String> getAirportActions() {
+        AirportClient airportClient = new AirportClient();
+        return airportClient.getAirportActions();
+    }
+
+    public void undoAirportAction() {
+        AirportClient airportClient = new AirportClient();
+        boolean success = airportClient.undoAirportAction();
+        if (success) {
+            System.out.println("Undo airport action successful.");
+        } else {
+            System.out.println("Undo airport action failed.");
+        }
+    }
+
+    public void redoAirportAction() {
+        AirportClient airportClient = new AirportClient();
+        boolean success = airportClient.redoAirportAction();
+        if (success) {
+            System.out.println("Redo Airport action successful.");
+        } else {
+            System.out.println("Redo Airport action failed.");
+        }
+    }
+
+    /*
+    * Passenger Methods
+    * */
 
     public String getAllPassengersWhoHaveUsedAirport(Long id) {
         List<Passenger> airportsPassengersHaveUsed = getAirportClient().getAllAirportsPassengersHaveUsed(1L);
@@ -385,7 +438,7 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             // Generate allowed airports for an aircraft based on ID
             Long id = Long.parseLong(args[2]);
             cliApp.generateAllowedAirportsBasedOnId(id);
-        }  else if (args[0].equalsIgnoreCase("GenAirportsInCity")) {
+        } else if (args[0].equalsIgnoreCase("GenAirportsInCity")) {
             // Get all airports for a city based on ID
             Long id = Long.parseLong(args[1]);
             cliApp.getAllAirportsForCities(id);
@@ -414,6 +467,19 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         } else if (args[0].equalsIgnoreCase("RedoAirCraftAction")) {
             cliApp.redoAircraftAction();
 
+        } else if (args[0].equalsIgnoreCase("GenPassengersInAirport")) {
+        Long id = Long.parseLong(args[1]);
+        cliApp.generateAllAirportsPassengersHaveUsed(id);
+
+        } else if (args[0].equalsIgnoreCase("GetAirportActions")){
+            cliApp.getAirportActions();
+
+        } else if (args[0].equalsIgnoreCase("UndoAirportAction")){
+            cliApp.undoAirportAction();
+
+        } else if (args[0].equalsIgnoreCase("RedoAirportAction")){
+            cliApp.redoAirportAction();
+            
         } else {
             System.out.println("Invalid action");
 

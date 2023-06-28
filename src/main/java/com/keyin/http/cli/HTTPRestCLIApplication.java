@@ -436,11 +436,7 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
             cliApp.redoCityAction();
         } else if (args[0].equalsIgnoreCase("getCityActions")) {
             // Get the list of city actions
-            List<String> cityActions = cliApp.getCityActions();
-            System.out.println("City Actions:");
-            for (String action : cityActions) {
-                System.out.println(action);
-            }
+            cliApp.getCityActions();
         } else if (args[0].equalsIgnoreCase("GenPassengersOnAircrafts")) {
             Long id = Long.parseLong(args[1]);
             cliApp.generateAllowedAircraftsBasedOnId(id);
@@ -469,7 +465,6 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         } else {
             System.out.println("Invalid action");
 
-
-
+        }
     }
-}}
+}

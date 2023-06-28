@@ -226,10 +226,7 @@ public class HTTPRestCLIApplication {
         AircraftClient aircraftClient = new AircraftClient();
         return aircraftClient.getAircraftActions();
     }
-    public  List<String> getPassengerActions(){
-        PassengerClient passengerClient = new PassengerClient();
-        return passengerClient.getPassengerActions();
-    }
+
 
 
     public void undoAircraftAction() {
@@ -409,6 +406,28 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
 
         return report.toString();
     }
+    public  List<String> getPassengerActions(){
+        PassengerClient passengerClient = new PassengerClient();
+        return passengerClient.getPassengerActions();
+    }
+    public void undoPassengerAction(){
+        PassengerClient passengerClient = new PassengerClient();
+        boolean success = passengerClient.undoPassengerAction();
+        if(success){
+            System.out.println("Undo Passenger Action Successful");
+        }else{
+            System.out.println("Undo Passenger Action Failed");
+        }
+    }
+    public void redoPassengerAction(){
+        PassengerClient passengerClient = new PassengerClient();
+        boolean success = passengerClient.redoPassengerAction();
+        if(success){
+            System.out.println("Redo Passenger Action Successful");
+        }else{
+            System.out.println("Redo Passenger Action Failed");
+        }
+    }
     /** PASSENGER CLIENT FUNCTIONS END*/
 
 
@@ -445,6 +464,15 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
         } else if (args[0].equalsIgnoreCase("GenPassengersOnAircrafts")) {
             Long id = Long.parseLong(args[1]);
             cliApp.generateAllowedAircraftsBasedOnId(id);
+        }  else if (args[0].equalsIgnoreCase("getPassengerActions")) {
+            cliApp.getPassengerActions();
+
+        }  else if (args[0].equalsIgnoreCase("undoPassengerActions")) {
+            cliApp.undoPassengerAction();
+
+        }  else if (args[0].equalsIgnoreCase("redoPassengerActions")) {
+            cliApp.redoPassengerAction();
+
         } else if (args[0].equalsIgnoreCase("GetAircraftActions")) {
             cliApp.getAircraftActions();
 
@@ -453,9 +481,6 @@ public String generateAllowedAircraftsBasedOnId(Long id) {
 
         } else if (args[0].equalsIgnoreCase("RedoAirCraftAction")) {
             cliApp.redoAircraftAction();
-
-        }  else if (args[0].equalsIgnoreCase("getPassengerActions")) {
-       cliApp.getPassengerActions();
 
         } else if (args[0].equalsIgnoreCase("GenPassengersInAirport")) {
         Long id = Long.parseLong(args[1]);

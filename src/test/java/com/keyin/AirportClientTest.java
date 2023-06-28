@@ -1,7 +1,6 @@
 package com.keyin;
 
 import com.keyin.domain.Airport;
-import com.keyin.domain.City;
 import com.keyin.domain.Passenger;
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.AirportClient;
@@ -12,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 

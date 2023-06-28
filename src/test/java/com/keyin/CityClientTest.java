@@ -2,29 +2,17 @@ package com.keyin;
 
 import com.keyin.domain.City;
 import com.keyin.domain.Airport;
-
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.CityClient;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,8 +57,8 @@ public class CityClientTest {
         airport1.setCode("YYT");
         airport1.setId(1L);
 
-
         List<Airport> airportInCity = new ArrayList<>();
+
         airportInCity.add(airport1);
 
         httpRestCLIApplicationUnderTest.setCityClient(mockCityClient);
@@ -142,7 +130,8 @@ public class CityClientTest {
     @Test
     @DisplayName("Get All City Actions")
     public void testGetAllCityActions() {
-        // Create a list of city actions
+
+
         List<String> cityActions = new ArrayList<>();
         cityActions.add("Action 1");
         cityActions.add("Action 2");
